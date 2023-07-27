@@ -5,9 +5,16 @@
 
 import uvicorn
 
-from glmtuner import create_app
+from glmtuner import ChatModel
+from glmtuner.api.app import create_app
+from glmtuner.tuner import get_infer_args
+
+
+def main():
+    chat_model = ChatModel(*get_infer_args())
+    app = create_app(chat_model)
+    uvicorn.run(app, host="0.0.0.0", port=8000, workers=1)
 
 
 if __name__ == "__main__":
-    app = create_app()
-    uvicorn.run(app, host="0.0.0.0", port=8000, workers=1)
+    main()

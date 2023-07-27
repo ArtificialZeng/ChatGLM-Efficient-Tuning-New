@@ -5,7 +5,8 @@ from glmtuner.webui.components import (
     create_top,
     create_sft_tab,
     create_eval_tab,
-    create_infer_tab
+    create_infer_tab,
+    create_export_tab
 )
 from glmtuner.webui.css import CSS
 from glmtuner.webui.manager import Manager
@@ -27,10 +28,13 @@ def create_ui() -> gr.Blocks:
         with gr.Tab("Evaluate"):
             eval_elems = create_eval_tab(top_elems, runner)
 
-        with gr.Tab("Inference"):
+        with gr.Tab("Chat"):
             infer_elems = create_infer_tab(top_elems)
 
-        elem_list = [top_elems, sft_elems, eval_elems, infer_elems]
+        with gr.Tab("Export"):
+            export_elems = create_export_tab(top_elems)
+
+        elem_list = [top_elems, sft_elems, eval_elems, infer_elems, export_elems]
         manager = Manager(elem_list)
 
         demo.load(
@@ -51,4 +55,4 @@ def create_ui() -> gr.Blocks:
 if __name__ == "__main__":
     demo = create_ui()
     demo.queue()
-    demo.launch(server_name="0.0.0.0", share=False, inbrowser=True)
+    demo.launch(server_name="0.0.0.0", server_port=7860, share=False, inbrowser=True)
